@@ -1,7 +1,11 @@
 pandas
 matplotlib
-db-sqlite3
+requests
+tqdm
 datasets
 ollama
 langchain
+
+# GPU inference only (utils.inferModelVllm / inferSystemModelVllm import these lazily)
 vllm
+torch

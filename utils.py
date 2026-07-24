@@ -1,5 +1,7 @@
 import requests
-from vllm import LLM, SamplingParams
+
+# ponytail: vllm imported lazily inside the two functions that need it, so metrics,
+# templating and CWE lookup stay usable (and testable) on a machine without a GPU.
 
 
 def calculate_metrics(df, pred_before, pred_after):
@@ -105,6 +107,8 @@ def inferSystemModelVllm(
     if not isinstance(system_prompts, list):
         system_prompts = [system_prompts] * len(prompts)
 
+    from vllm import LLM, SamplingParams
+
     if len(system_prompts) != len(prompts):
         raise ValueError(
             "The length of system_prompts must match the length of prompts."
@@ -133,6 +137,8 @@ def inferSystemModelVllm(
 
 
 def inferModelVllm(model, prompts, temperature=0.0, top_p=0.9, max_tokens=2000):
+    from vllm import LLM, SamplingParams
+
     sampling_params = SamplingParams(
         temperature=temperature, top_p=top_p, max_tokens=max_tokens
     )
